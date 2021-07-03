@@ -27,7 +27,7 @@ public class UsersClient {
     }
 
     public FollowingIdsDto getFollowingUsersIds(String loggedUserId) {
-        String url = USER_SERVICE_URL + "/get-following-ids" + loggedUserId;
+        String url = USER_SERVICE_URL + "/get-following-ids/" + loggedUserId;
         ResponseEntity<FollowingIdsDto> response = restTemplate.getForEntity(url, FollowingIdsDto.class);
         return response.getBody();
     }
