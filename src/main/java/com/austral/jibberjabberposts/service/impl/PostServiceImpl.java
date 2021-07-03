@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -28,9 +29,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostListingDto getAllPosts() {
-        List<Post> posts = postRepository.findAll();
+    public PostListingDto getAllPosts(String loggedUserId) {
+        Set<String> followingUsersIds = usersClient.getFollowingUsersIds(loggedUserId).getFollowingUsersIds();
+        followingUsersIds.add(loggedUserId); //Makes user able to see also his own posts
+
+        List<Post> posts = postRepository.findAllByCreatorIdIn(followingUsersIds);
         List<PostInfoDto> returnPosts = new ArrayList<>();
+
         posts.sort(Comparator.comparing(Post::getCreatedTime).reversed());//Orders posts by most recent first
         posts.forEach((post -> {
             ReducedUserDto creatorDto = usersClient.getUserById(post.getCreatorId());

@@ -16,9 +16,9 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("/get-all")
-    public PostListingDto postListingDto() {
-        return postService.getAllPosts();
+    @GetMapping("/get-all/{loggedUserId}")
+    public PostListingDto postListingDto(@PathVariable String loggedUserId) {
+        return postService.getAllPosts(loggedUserId);
     }
 
     @PostMapping("/create")
