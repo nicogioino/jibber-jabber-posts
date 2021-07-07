@@ -15,4 +15,8 @@ public interface PostService {
     void deletePost(Long id);
 
     PostListingDto findAllByCreatorId(String creatorId);
+
+    PostInfoDto likePost(Long postId, String userId);
+
+    PostInfoDto dislikePost(Long postId, String userId);
 }

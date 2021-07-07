@@ -20,9 +20,20 @@ public class PostInfoDto {
 
     String content;
 
+    int likes;
+
+    int dislikes;
+
     ReducedUserDto reducedUserDto;
 
     public static PostInfoDto from(Post post, ReducedUserDto reducedUserDto) {
-        return new PostInfoDto(post.getId(), post.getCreatedTime(), post.getContent(),reducedUserDto);
+        return new PostInfoDto(
+                post.getId(),
+                post.getCreatedTime(),
+                post.getContent(),
+                post.getLikedBy().size(),
+                post.getDislikedBy().size(),
+                reducedUserDto
+        );
     }
 }

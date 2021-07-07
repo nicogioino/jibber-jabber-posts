@@ -29,7 +29,27 @@ public class Post {
 
     String creatorId;
 
-    int likes;
+    @ElementCollection
+    Set<String> likedBy;
 
-    int dislikes;
+    @ElementCollection
+    Set<String> dislikedBy;
+
+    public Set<String> getLikedBy() {
+        if (likedBy == null) likedBy = new HashSet<>();
+        return likedBy;
+    }
+
+    public void setLikedBy(Set<String> likedBy) {
+        this.likedBy = likedBy;
+    }
+
+    public Set<String> getDislikedBy() {
+        if (dislikedBy == null) dislikedBy = new HashSet<>();
+        return dislikedBy;
+    }
+
+    public void setDislikedBy(Set<String> dislikedBy) {
+        this.dislikedBy = dislikedBy;
+    }
 }

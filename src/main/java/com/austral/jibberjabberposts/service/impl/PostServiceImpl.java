@@ -71,4 +71,38 @@ public class PostServiceImpl implements PostService {
         }));
         return new PostListingDto(returnPosts);
     }
+
+    @Override
+    public PostInfoDto likePost(Long postId, String userId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("Post not found"));
+        Set<String> likedBy = post.getLikedBy();
+        Set<String> dislikedBy = post.getDislikedBy();
+        dislikedBy.remove(userId);
+        likedBy.add(userId);
+
+        post.setLikedBy(likedBy);
+        post.setDislikedBy(dislikedBy);
+
+        Post edited = postRepository.save(post);
+        ReducedUserDto creatorDto = usersClient.getUserById(edited.getCreatorId());
+        return PostInfoDto.from(edited,creatorDto);
+    }
+
+    @Override
+    public PostInfoDto dislikePost(Long postId, String userId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("Post not found"));
+        Set<String> likedBy = post.getLikedBy();
+        Set<String> dislikedBy = post.getDislikedBy();
+        dislikedBy.add(userId);
+        likedBy.remove(userId);
+
+        post.setLikedBy(likedBy);
+        post.setDislikedBy(dislikedBy);
+
+        Post edited = postRepository.save(post);
+        ReducedUserDto creatorDto = usersClient.getUserById(edited.getCreatorId());
+        return PostInfoDto.from(edited,creatorDto);
+    }
 }
