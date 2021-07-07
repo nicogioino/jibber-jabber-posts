@@ -28,4 +28,8 @@ public class Post {
     String content;
 
     String creatorId;
+
+    int likes;
+
+    int dislikes;
 }

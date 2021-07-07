@@ -85,6 +85,7 @@ jobs:
           envs: REPO_OWNER, GITHUB_TOKEN
           script: |
             cd jibber-jabber-infraestructure
-            sudo docker system prune --force
-            sudo ./deploy-prod.sh
+            sudo docker-compose -f docker-compose-prod.yml  down
+            sudo docker system prune --all --force
+            sudo docker-compose -f docker-compose-prod.yml up --detach
 
